@@ -18,7 +18,8 @@ artifacts = 0
 key = 0
 completeRiddle = False
 chestOpened = False
-
+chestOpened2 = False
+obtainedKey = False
 
 def checkartifacts(x):
     if x == 3:
@@ -33,11 +34,161 @@ def minusturn(x):
     turns = x
     return turns
 
+def cellar(x):
+    global artifacts
+    global chestOpened2
+    #take one off turns
+    minusturn(x)
+    #checkartifacts(artifacts)
+    if checkartifacts(artifacts) == True:
+        print('You have 3 artifacts! You have won! Game is ending now.')
+        exit()
+
+    print('Da CELLAR')
+    print('*****')
+    print('HOME OF ONE MORE CHEST')
+    print('*****')
+    print('HOWEVER, There a note that says OPEN WILL END GAME.' )
+    print('*****')
+    print('Current number of turns ' + str(x))
+    print('*****')
+
+    #loop to open chest
+    while True:
+        if chestOpened2 == False:
+            chestinput = input('Knowing that this chest could lose you the game, what od you want to do? Answer Y or N...')
+            #global artifacts
+            if chestinput in ['Y','N']:
+                if chestinput in 'Y':
+                    print('You have found a new artifact! The holy grail!!!')
+                    print('Another step closer to a win!')
+                    artifacts += 1
+                    print('You now have ' + str(artifacts) + ' artifacts.')
+                    chestOpened2 = True
+                    break
+                else:
+                    print('No worries, keep it movin!')
+                    break
+            else:
+                print('not a valid input try again!')
+        else:
+            print('You already opened the chest! Keep it moving.')
+            break
+
+    #next turn
+    while True:
+        move = str(input('Enter which way you would like to go: N, S, E, W: '))
+        print('*****')
+        if move in 'W':
+            mainroom(turns)
+            break
+        elif move in 'N':
+            study(turns)
+            break
+        else:
+            print('Cannot go that way! You have a wall, try again.')
+
+def study(x):
+    #take one off turns
+    minusturn(x)
+    #checkartifacts(artifacts)
+    if checkartifacts(artifacts) == True:
+        print('You have 3 artifacts! You have won! Game is ending now.')
+        exit()
+
+    print('A Quiet Room')
+    print('*****')
+    print('This is the study!')
+    print('*****')
+    print('Enjoy your stay here, nothing to find.')
+    print('*****')
+    print('Current number of turns ' + str(x))
+    print('*****')
+    
+    while True:
+        move = str(input('Enter which way you would like to go: N, S, E, W: '))
+        print('*****')
+        if move in 'N':
+            dungeon(turns)
+            break
+        elif move in 'S':
+            cellar(turns)
+            break
+        else:
+            print('Cannot go that way! You have a wall, try again.')
+
 def basement(x):
-    print('s')
+    #take one off turns
+    minusturn(x)
+    #checkartifacts(artifacts)
+    if checkartifacts(artifacts) == True:
+        print('You have 3 artifacts! You have won! Game is ending now.')
+        exit()
+    
+    print('A boring room... the Basement')
+    print('*****')
+    print('Absolutely nothing to see here')
+    print('*****')
+    print('Unless of course there\'s something in storage you need?')
+    print('*****')
+    print('Current number of turns ' + str(x))
+    print('*****')
+
+    #next turn
+    while True:
+        move = str(input('Enter which way you would like to go: N, S, E, W: '))
+        print('*****')
+        if move in 'N':
+            cellar(turns)
+            break
+        elif move in 'W':
+            kitchen(turns)
+            break
+        else:
+            print('Cannot go that way! You have a wall, try again.')
 
 def dungeon(x):
-    print('yo')
+    global obtainedKey
+    global key
+    #take one off turns
+    minusturn(x)
+    #checkartifacts(artifacts)
+    if checkartifacts(artifacts) == True:
+        print('You have 3 artifacts! You have won! Game is ending now.')
+        exit()
+    
+    print('Possibly the most important room in the game! THE DUNGEON')
+    print('*****')
+    print('Here lies one of the biggest tests yet')
+    print('*****')
+    print('You are going to get one chance to answer one more riddle.')
+    print('*****')
+    print('Get it right, you find the key. Get it wrong, lose all your artifacts and look for more.')
+    print('*****')
+    print('Current number of turns ' + str(x))
+    print('*****')
+    keyQuestion = input('I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?')
+
+
+    while obtainedKey == False:
+        
+        if keyQuestion in ['echo', 'Echo','an Echo', 'An Echo', 'an echo']:
+            print('YOU DID IT. HERE IS THE KEY! GET TO THE BALLROOM NOW TO WIN')
+            key += 1 
+            obtainedKey = True
+            break
+        else:
+            print('Failure... You have ' + str(x) + ' to find 3 artifacts, get looking!')
+            break
+
+    while True:
+        move = str(input('Enter which way you would like to go: N, S, E, W: '))
+        print('*****')
+        if move in 'S':
+            study(turns)
+            break
+        else:
+            print('Cannot go that way! You have a wall, try again.')
 
 #kitchen function
 def kitchen(x):
@@ -81,6 +232,9 @@ def kitchen(x):
             break
         elif move in 'E':
             basement(turns)
+            break
+        elif move in 'W':
+            lounge(turns)
             break
         else:
             print('Cannot go that way! You have a wall, try again.')
@@ -249,6 +403,12 @@ def mainroom(x):
             elif move in 'W':
                 boilerroom(turns)
                 break
+            elif move in 'S':
+                kitchen(turns)
+                break
+            elif move in 'E':
+                cellar(turns)
+                break
             else:
                 print('This is not a valid input! Try again...')
 
@@ -306,9 +466,16 @@ while True:
 #directions for moving NSEW to start
         if move in 'N':
             ballroom(turns)
+            break
         elif move in 'W':
             boilerroom(turns)
-        break
+            break
+        elif move in 'S':
+            kitchen(turns)
+            break
+        elif move in 'E':
+            cellar(turns)
+            break
     else:
         print('This is not a valid input! Try again...')
 
