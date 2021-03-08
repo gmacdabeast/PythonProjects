@@ -3,7 +3,7 @@ from colorama import Fore, Style, init
 
 #Intro Instructions
 init(autoreset=True)
-print(Fore.CYAN + 'Welcome to my Text Based Adventure Game!' )
+print(Fore.CYAN + 'Welcome to my Text Based Adventure Game!!' )
 print(Fore.RED + 'You are playing in a virtual Clue Board')
 print(Fore.CYAN + 'You have two goals to obtain, either find the key and escape through the ballroom')
 print(Fore.RED + 'OR locate 3 artifacts')
