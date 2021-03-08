@@ -22,7 +22,7 @@ while n != 'numberGuess':
             print('cannnot be over 100! Try again.')
             numberGuess = int(input('Guess what the number is here: '))
     else:
-        print('you suck ass and could not guess! START OVER BITCH')
+        print('You could not guess! Start over...')
         exit()
 
 
