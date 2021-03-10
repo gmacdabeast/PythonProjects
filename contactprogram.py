@@ -15,9 +15,9 @@ def retrieveContacts():
     tl = tlast.get()
 
     #check for blanks
-    if tf =='' or tl =='':
-        messagebox.showerror('Error', 'Cannot leave blank!')
-        return
+    #if tf =='' or tl =='':
+    #    messagebox.showerror('Error', 'Cannot leave blank!')
+    #    return
     #check for alphas
     if(tf.isalpha() == False or tl.isalpha ==False):
         messagebox.showerror('Alert','Can\'t enter numbers for names. Alpha only.')
@@ -86,14 +86,17 @@ def insertContacts():
         messagebox.showerror('Error', 'Cannot leave blank!')
 
 
-
-    if len(str(tp)) == 10:
+    cur.execute('SELECT * From contacts where phoneNumber = ?', (tp,))
+    if cur.fetchone():
+        messagebox.showerror('Error','Contact number already exists!')
+        return
+    elif len(str(tp)) == 10:
         cur.execute("INSERT INTO contacts VALUES (NULL,?,?,?)", (tf, tl, tp))
         con.commit()
         cur.close()
         messagebox.showinfo('Title', 'Insertion Successful!')
     else:
-        messagebox.showerror('Error', 'Must input 10 NUMERIC digits for Phone Number! Try again')
+            messagebox.showerror('Error', 'Must input 10 NUMERIC digits for Phone Number! Try again')
 
 
 
@@ -171,5 +174,4 @@ y.pack(side = BOTTOM)
 z.pack(side = BOTTOM)
 gui.mainloop()
 print('gui successful')
-
 
