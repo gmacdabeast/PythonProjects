@@ -62,7 +62,7 @@ def createList():
     x = int(listEntry.get())
     
     for i in range (0,x):
-        rand = randint(0,1000)
+        rand = randint(0,50)
         randomList.append(rand)
     
     #print(randomList)
@@ -82,9 +82,9 @@ def binarySearch(list, low, high, num):
         if list[mid] == numConvert:
             return numConvert
         elif list[mid] < numConvert:
-            binarySearch(randomList, mid+1, high, number)
+            return binarySearch(randomList, mid+1, high, number)
         elif list[mid] > numConvert:
-            binarySearch(randomList, low, mid-1, number )
+            return binarySearch(randomList, low, mid-1, number )
     else:
         return -1
 
